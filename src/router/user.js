@@ -1,10 +1,18 @@
-const handleUserRouter=(req,res)=>{
-    const method=req.method
+const { loginCheck } = require('../controller/user')
+const { SuccessModel, ErrorModel } = require('../model/resModel')
+const handleUserRouter = (req, res) => {
+    const method = req.method
 
-    if(method==='POST'&&req.path==='/api/user/login')
-    return{
-        msg:'this is login'
+    if (method === 'POST' && req.path === '/api/user/login') {
+        const { username, password } = req.body
+        const result = loginCheck(username, password)
+        if (result) {
+            return new SuccessModel()
+        }
+        return new ErrorModel('login fail')
     }
-
+    return {
+        msg: 'this is login'
+    }
 }
-module.exports=handleUserRouter
+module.exports = handleUserRouter
