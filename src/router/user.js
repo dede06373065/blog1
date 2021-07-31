@@ -11,8 +11,5 @@ const handleUserRouter = (req, res) => {
         }
         return new ErrorModel('login fail')
     }
-    return {
-        msg: 'this is login'
-    }
 }
 module.exports = handleUserRouter
