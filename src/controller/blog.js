@@ -1,21 +1,14 @@
+const {exec}=require('../db/mysql')
 const getList = (author, keyword) => {
-    //先返回假数据因为没有数据库，保证格式正确
-    return [
-        {
-            id: 1,
-            title: 'title A',
-            content: 'content a',
-            createTime: 1627521360068,
-            author: 'aaaa'
-        },
-        {
-            id: 1,
-            title: 'title b',
-            content: 'content b',
-            createTime: 1627521360168,
-            author: 'bbb'
-        }
-    ]
+    let sql=`select * from blogs where 1=1 `//1=1用来占位 永远成立
+    if(author){
+        sql+=`and author='${author}' `
+    }
+    if(keyword){
+        sql+=`and title like '%${keyword}%' `
+    }
+    sql+=`order by createtime desc;`
+    return exec(sql) 
 }
 
 const getDetail = (id) => {
