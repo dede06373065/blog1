@@ -39,13 +39,23 @@ const serverHandle = (req, res) => {
     getPostData(req).then(postData => {
         req.body = postData
          //deal with the blog router
-        const blogData = handleBlogRouter(req, res)
-        if (blogData) {
-            res.end(
-                JSON.stringify(blogData)//return JSON string字符串
-            )
+        // const blogData = handleBlogRouter(req, res)
+        // if (blogData) {
+        //     res.end(
+        //         JSON.stringify(blogData)//return JSON string字符串
+        //     )
+        //     return
+        // }
+        const blogResult= handleBlogRouter(req, res)
+        if(blogResult){
+            blogResult.then(blogData=>{
+                res.end(
+                    JSON.stringify(blogData)//return JSON string字符串
+                )
+            })
             return
         }
+        
         //deal with userRouter
         const userData = handleUserRouter(req, res)
         if (userData) {
