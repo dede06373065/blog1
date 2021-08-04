@@ -12,20 +12,26 @@ const getList = (author, keyword) => {
 }
 
 const getDetail = (id) => {
-    return {
-        id: 1,
-        title: 'title A',
-        content: 'content a',
-        createTime: 1627521360068,
-        author: 'aaaa'
-    }
+    const sql=`select * from blogs where id='${id}'`
+    return exec(sql).then(row=>{return row[0]})
+
 }
 
 const newBlog = (blogData = {}) => {
-    console.log('newblog data...', blogData)
-    return {
-        id: 3
-    }
+    const title=blogData.title
+    const content=blogData.content
+    const createtime=Date.now()
+    const author=blogData.author
+    
+    const sql=`
+    insert into blogs (title,content,createtime,author)
+    values ('${title}','${content}','${createtime},'${author}');`
+    return exec(sql).then(insertData=>{
+        console.log('insertData is ', insertData)
+        return {
+            id:insertData.insertId
+        }
+    })
 }
 
 const updateBlog = (id, blogData = {}) => {
