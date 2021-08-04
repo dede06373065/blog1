@@ -57,11 +57,19 @@ const serverHandle = (req, res) => {
         }
         
         //deal with userRouter
-        const userData = handleUserRouter(req, res)
-        if (userData) {
-            res.end(
+        // const userData = handleUserRouter(req, res)
+        // if (userData) {
+        //     res.end(
+        //         JSON.stringify(userData)
+        //     )
+        //     return
+        // }
+        const userResult=handleUserRouter(req, res)
+        if(userResult){
+            userResult.then(userData=>{
+                res.end()
                 JSON.stringify(userData)
-            )
+            })
             return
         }
         //not found
